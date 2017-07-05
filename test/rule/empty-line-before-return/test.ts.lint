@@ -1,0 +1,9 @@
+if (true) {
+    return 'hello'; //error
+    ~~~~~~           [Put empty line before return statement.]
+}
+
+function correct() {
+    
+    return 'bye';
+}

@@ -1,0 +1,5 @@
+import { React} from 'react'
+        ~                               [msg]
+import {Route } from 'react-router'
+             ~                          [msg]
+[msg]: Remove space in import statement
