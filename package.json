@@ -16,10 +16,12 @@
   },
   "homepage": "https://bitbucket.org/causecode/ts-rules#readme",
   "dependencies": {
-    "@types/node": "^8.0.2",
+    "@types/node": "8.0.2",
+    "shelljs": "0.7.8",
     "tslint": "5.1.0"
   },
   "devDependencies": {
-    "typescript": "^2.2.2"
+    "typescript": "2.2.2",
+    "rimraf": "2.6.1"
   }
 }

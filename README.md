@@ -5,7 +5,7 @@
 1. This packgae requires `tslint@5.1.0` or higher and `typescript@2.2.2`  
 2. Add Following dependency in your project's `package.json` file and run `npm install`  
     * ```git+ssh://git@bitbucket.org/causecode/ts-rules.git#version```
-    * (e.g. ```git+ssh://git@bitbucket.org/causecode/ts-rules.git#0.0.1```)
+    * (e.g. ```git+ssh://git@bitbucket.org/causecode/ts-rules.git#v0.0.1```)
 3. Add following in your project's `tslint.json` file.
     * `"rulesDirectory": ["./node_modules/ts-rules/public"]`
 4. Add following custom rules to `rules` block
@@ -37,7 +37,17 @@
     }
     ```
 
-5. Now when you run `npm run lint-ts` (it is assumed that this command is preconfigured in your project), it will show appropriate error/warning along with line no.
+5. Now when you run `npm run lint-ts` (it is assumed that this command is preconfigured in your project), it will show appropriate error/warning along with line no.  
+6. If you get any compile time error, then check you project's `ambientInterfaces.d.ts`, remove existing type declaration for `require` and then add following type for `require`.  
+```
+declare interface NodeRequire {
+    <T>(path: string): T;
+    (paths: string[], callback: (...modules: any[]) => void): void;
+    ensure: (paths: string[], callback: (require: <T>(path: string) => T) => void) => void;
+}
+
+declare var require: NodeRequire;  
+```
 
 ## Development ##
 
