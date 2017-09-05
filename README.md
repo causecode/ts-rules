@@ -8,17 +8,17 @@
     * (e.g. ```git+ssh://git@bitbucket.org/causecode/ts-rules.git#v0.0.1```)
 3. Add following in your project's `tslint.json` file.
     * `"rulesDirectory": ["./node_modules/ts-rules/public"]`
-4. Add following custom rules to `rules` block
-    *   ```
-        "new-line-indent": [true,"spaces", 4, 2],
-        "no-index-import": true,
-        "no-import-spaces": true,
-        "empty-line-before-return": true,
-        "no-anchor-href": {
-            "severity": "warning"
-        },
-        "model-resource-name": true
-        ```
+4. Add following custom rules to `rules` block  
+    ```
+    "new-line-indent": [true,"spaces", 4, 2],
+    "no-index-import": true,
+    "no-import-spaces": true,
+    "empty-line-before-return": true,
+    "no-anchor-href": {
+        "severity": "warning"
+    },
+    "model-resource-name": true
+    ```
     
     * for e.g. your tslint.json will look something like this.
     ```
@@ -38,7 +38,7 @@
     ```
 
 5. Now when you run `npm run lint-ts` (it is assumed that this command is preconfigured in your project), it will show appropriate error/warning along with line no.  
-6. If you get any compile time error, then check you project's `ambientInterfaces.d.ts`, remove existing type declaration for `require` and then add following type for `require`.  
+6. If you get this `error TS2403: Subsequent variable declarations must have the same type.  Variable 'require' must be of type '{ <T>(path: string): T; (paths: string[], callback: (...modules: any[]) => void): void; ensure: (...', but here has type 'NodeRequire'` compile time error, then check you project's `ambientInterfaces.d.ts`, remove existing type declaration for `require` and then add following type for `require`.  
 ```
 declare interface NodeRequire {
     <T>(path: string): T;

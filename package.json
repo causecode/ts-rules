@@ -5,6 +5,7 @@
   "scripts": {
     "compile": "npm run clean && tsc",
     "postinstall": "npm run compile",
+    "lint-ts": "tslint 'rules/*.ts' 'rules/**/*.ts'",
     "clean": "rimraf public",
     "test": "tslint --test test/rule/*"
   },
@@ -21,7 +22,8 @@
     "tslint": "5.1.0"
   },
   "devDependencies": {
-    "typescript": "2.2.2",
-    "rimraf": "2.6.1"
+    "rimraf": "2.6.1",
+    "tslint": "5.4.3",
+    "typescript": "2.2.2"
   }
 }

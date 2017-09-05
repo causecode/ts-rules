@@ -1,3 +1,11 @@
+/*
+ * Copyright (c) 2017-Present, CauseCode Technologies Pvt Ltd, India.
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or
+ * without modification, are not permitted.
+ */
+
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 
@@ -9,25 +17,34 @@ export class Rule extends Lint.Rules.AbstractRule {
     }
 }
 
+/**
+ * @author Mahesh Bhuva
+ * @since v0.0.1
+ * 
+ * @class NoImportSpace
+ * @extends {Lint.RuleWalker}
+ */
 class NoImportSpace extends Lint.RuleWalker {
     public visitImportDeclaration(node: ts.ImportDeclaration) {
-        let importValues: ts.Node = node.getChildAt(1);
-        let importText: string = importValues.getFullText().trim();
+        const importValues: ts.Node = node.getChildAt(1);
+        const importText: string = importValues.getFullText().trim();
 
         // matches spaces at start of import (e.g "import {   React} from 'react';")
-        let startRegex: RegExp = new RegExp(/^{\s+/);
+        const startRegex: RegExp = new RegExp(/^{\s+/);
 
         // matches spaces at end of import (e.g "import {React   } from 'react';")
-        let endRegex: RegExp = new RegExp(/\s+}$/);
+        const endRegex: RegExp = new RegExp(/\s+}$/);
 
-        let lineStart: ts.LineAndCharacter = ts.getLineAndCharacterOfPosition(this.getSourceFile(), node.getStart())
-        let lineEnd: ts.LineAndCharacter = ts.getLineAndCharacterOfPosition(this.getSourceFile(), node.getEnd());
+        const lineStart: ts.LineAndCharacter = ts.getLineAndCharacterOfPosition(this.getSourceFile(), node.getStart());
+        const lineEnd: ts.LineAndCharacter = ts.getLineAndCharacterOfPosition(this.getSourceFile(), node.getEnd());
         
         if (startRegex.test(importText) && lineEnd.line - lineStart.line === 0) {
-            this.addFailureAt(importValues.getStart() + 1, importText.match(startRegex)[0].length - 1, Rule.FAILURE_STRING);
+            const spacesLength: number = importText.match(startRegex)[0].length;
+            this.addFailureAt(importValues.getStart() + 1, spacesLength - 1, Rule.FAILURE_STRING);
         }
         if (endRegex.test(importText) && lineEnd.line - lineStart.line === 0) {
-            this.addFailureAt(importValues.getEnd() - importText.match(endRegex)[0].length, importText.match(endRegex)[0].length - 1, Rule.FAILURE_STRING);
+            const spacesLength: number = importText.match(endRegex)[0].length;
+            this.addFailureAt(importValues.getEnd() - spacesLength, spacesLength - 1, Rule.FAILURE_STRING);
         }
 
         super.visitImportDeclaration(node);
