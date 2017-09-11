@@ -15,6 +15,9 @@ const OPTION_USE_TABS = 'tabs';
 const OPTION_USE_SPACES = 'spaces';
 
 /**
+ * This class creates rule which checks for indentation specified in options when jsx attribute of
+ * compoent is placed on new line or parameters of function is placed on next line.
+ * 
  * @author Mahesh Bhuva
  * @since v0.0.1
  * 
@@ -44,14 +47,14 @@ function parseOptions(ruleArguments: any[]): IOptions | undefined {
     const times = ruleArguments[2] as number | undefined;
 
     return {
-        type: type,
+        type,
         size: (size === OPTION_INDENT_SIZE_2 || size === OPTION_INDENT_SIZE_4) ? size : undefined,
-        times: times,
+        times,
     };
 }
 
-function walk(ctx: Lint.WalkContext<IOptions>) {
-    return ts.forEachChild(ctx.sourceFile, function cb(node: ts.Node): void {
+function walk(ctx: Lint.WalkContext<IOptions>): void {
+    ts.forEachChild(ctx.sourceFile, function cb(node: ts.Node): void {
         const {options} = ctx;
         const regex: RegExp = options.type === 'tabs' ? new RegExp(/^\t+\S/) : new RegExp(/^\s+\S/);
         const failure: string = Rule.FAILURE_STRING(options.type === 'tabs' ?
@@ -72,6 +75,7 @@ function walk(ctx: Lint.WalkContext<IOptions>) {
             if (startSpaces > 0) {
                 startSpaces--;
             }
+
             /*
              * This condition checks if the node is JSX Element or not and if node is JSX Element then depending on
              * either it is self closing jsx element or not, we are getting its JSX attributes (props)
@@ -83,6 +87,7 @@ function walk(ctx: Lint.WalkContext<IOptions>) {
                     childNodes = node.getChildAt(2);
                 }
             }
+
             /*
              * This condition checks if given child node is SyntaxList(attributes of component) or not and if so,
              * then checking for indentation
@@ -92,28 +97,23 @@ function walk(ctx: Lint.WalkContext<IOptions>) {
                     const param: ts.Node = childNodes.getChildAt(i);
                     if (param.kind === ts.SyntaxKind.JsxAttribute &&
                             paramInNewLine(ctx.sourceFile, param, lineOfNode)) {
-                        if (!validIndentation(startSpaces, param, options, regex)) {
-                            return ctx.addFailureAt(param.getStart(), param.getFullText().trim().length, failure);
-                        }
+                        throwError(ctx, startSpaces, param, options, regex, failure);
                     }
                 }
+
             /*
              * This part is executed if child node is parameters of function and indentation is checked.
              */
             } else {
                 ts.forEachChild(childNodes, (param: ts.Node) => {
-                    if (param.kind === ts.SyntaxKind.Parameter) {
-                        if (paramInNewLine(ctx.sourceFile, param, lineOfNode)) {
-                            if (!validIndentation(startSpaces, param, options, regex)) {
-                                return ctx.addFailureAt(param.getStart(), param.getFullText().trim().length, failure);
-                            }
-                        }
+                    if (param.kind === ts.SyntaxKind.Parameter && paramInNewLine(ctx.sourceFile, param, lineOfNode)) {
+                        throwError(ctx, startSpaces, param, options, regex, failure);
                     }
                 });
             }
         }
 
-        return ts.forEachChild(node, cb);
+        ts.forEachChild(node, cb);
     });
 }
 
@@ -132,6 +132,7 @@ function validIndentation(startSpaces: number, param: ts.Node, options: IOptions
     if (spaces > 0) {
         spaces--;
     }
+
     if (options.type === 'spaces' && (startSpaces + options.size * options.times) === spaces) {
         return true;
     } else if (options.type === 'tabs' && (startSpaces + options.times) === spaces) {
@@ -149,4 +150,17 @@ function paramInNewLine(sourceFile: ts.SourceFile, param: ts.Node, nodeLineNo: n
     }
 
     return true;
+}
+
+function throwError(
+        ctx: Lint.WalkContext<IOptions>,
+        startSpaces: number,
+        param: ts.Node,
+        options: IOptions,
+        regex: RegExp,
+        failure: string
+) {
+    if (!validIndentation(startSpaces, param, options, regex)) {
+        ctx.addFailureAt(param.getStart(), param.getFullText().trim().length, failure);
+    }
 }

@@ -18,6 +18,8 @@ export class Rule extends Lint.Rules.AbstractRule {
 }
 
 /**
+ * This class creates rule which checks for spaces around braces in import statement.
+ * 
  * @author Mahesh Bhuva
  * @since v0.0.1
  * 

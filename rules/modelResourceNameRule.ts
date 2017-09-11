@@ -24,7 +24,7 @@ export class Rule extends Lint.Rules.AbstractRule {
  * @param {Lint.WalkContext<void>} ctx 
  * @returns 
  */
-function walk(ctx: Lint.WalkContext<void>) {
+function walk(ctx: Lint.WalkContext<void>): void {
     // fileName will begin with / (e.g '/BlogModel.ts')
     const fileNameRegExpMatcher: RegExpMatchArray | null = ctx.sourceFile.fileName.match(/\/\w+Model\.(ts|tsx)/);
     const fileName: string = fileNameRegExpMatcher ? fileNameRegExpMatcher[0] : '';
@@ -36,9 +36,9 @@ function walk(ctx: Lint.WalkContext<void>) {
     const resource: string = fileName.substring(1, fileName.indexOf('Model')).toLowerCase();
 
     /*
-     * Here, we are iterating every child of file recursively and looking for resourceName property
+     * Iterating over children of file recursively and looking for resourceName property.
      */
-    return ts.forEachChild(ctx.sourceFile, function cb(node: ts.Node): void {
+    ts.forEachChild(ctx.sourceFile, function cb(node: ts.Node): void {
         const nodeText: string = node.getFullText();
 
         if (node.kind === ts.SyntaxKind.PropertyDeclaration && nodeText.indexOf('resourceName') !== -1) {
@@ -49,13 +49,13 @@ function walk(ctx: Lint.WalkContext<void>) {
             const resourceName: string = matchedString.substring(1, matchedString.length - 1).toLowerCase();
 
             if (resource !== resourceName) {
-               return ctx.addFailureAt(
+               ctx.addFailureAt(
                    node.getStart() + nodeText.trim().search(regex) + 1,
                    resourceName.length, Rule.FAILURE_STRING
                 ); 
             }
         }
 
-        return ts.forEachChild(node, cb);
+        ts.forEachChild(node, cb);
     });
 }

@@ -1,5 +1,13 @@
 {
-    "rules": {
+  "rulesDirectory": ["./public"],
+  "rules": {
+      "new-line-indent": [true, "spaces", 4, 2],
+      "no-index-import": true,
+      "no-import-spaces": true,
+      "empty-line-before-return": true,
+      "no-anchor-href": {
+          "severity": "warning"
+      },
       "jsx-alignment": false,
       "jsx-wrap-multiline": false,
       "array-type": [true, "array"],

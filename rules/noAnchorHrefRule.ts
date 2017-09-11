@@ -19,6 +19,9 @@ export class Rule extends Lint.Rules.AbstractRule {
 }
 
 /**
+ * This class creates rule which checks for anchor having external or internal url and
+ * warns if anchor is used with internal url.
+ * 
  * @author Mahesh Bhuva
  * @since v0.0.1
  * 
@@ -36,6 +39,7 @@ class NoAnchorHref extends Lint.RuleWalker {
                     // This node contains the value of href
                     const hrefNode: ts.Node = child.getChildAt(2).getChildAt(0).getChildAt(2);
                     const url: string = hrefNode.getFullText().substring(1);
+
                     if (hrefNode.kind === ts.SyntaxKind.StringLiteral && !isExternalUrl(url)) {
                         return that.addFailureAt(child.getStart() , child.getWidth(), Rule.FAILURE_STRING);
                     }
