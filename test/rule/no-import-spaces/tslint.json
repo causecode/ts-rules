@@ -1,0 +1,6 @@
+{
+"rulesDirectory": ["../../../public"],
+    "rules": {
+        "no-import-spaces": true
+    }
+}
