@@ -1,0 +1,6 @@
+{
+"rulesDirectory": ["../../../public"],
+    "rules": {
+        "empty-line-before-return": true
+    }
+}

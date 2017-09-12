@@ -1,0 +1,26 @@
+{
+  "name": "ts-rules",
+  "version": "0.0.1",
+  "description": "Custom TS Lint Rules",
+  "scripts": {
+    "compile": "npm run clean && tsc",
+    "postinstall": "npm run compile",
+    "lint-ts": "tslint 'rules/*.ts' 'rules/**/*.ts'",
+    "clean": "rimraf public",
+    "test": "tslint --test test/rule/*"
+  },
+  "author": "CauseCode Technologies",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@bitbucket.org/causecode/ts-rules.git"
+  },
+  "homepage": "https://bitbucket.org/causecode/ts-rules#readme",
+  "dependencies": {
+    "@types/node": "8.0.2"
+  },
+  "devDependencies": {
+    "tslint": "5.4.3",
+    "typescript": "2.2.2"
+  }
+}

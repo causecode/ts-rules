@@ -1,0 +1,6 @@
+{
+"rulesDirectory": ["../../../public"],
+    "rules": {
+        "no-index-import": true
+    }
+}
