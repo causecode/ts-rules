@@ -4,7 +4,6 @@
   "description": "Custom TS Lint Rules",
   "scripts": {
     "compile": "npm run clean && tsc",
-    "postinstall": "npm run compile",
     "lint-ts": "tslint 'rules/*.ts' 'rules/**/*.ts'",
     "clean": "rimraf public",
     "test": "tslint --test test/rule/*"
