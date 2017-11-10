@@ -10,3 +10,4 @@
 - Rule for checking resourceName and model name equality (model-resource-name)
 - Rule for checking spaces around braces in import statements (no-import-spaces)
 - Rule for checking indentation when attributes or parameters of function are on new line (new-line-indent)
+- Publish Configuration in `package.json`.

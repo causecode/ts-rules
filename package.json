@@ -22,5 +22,8 @@
   "devDependencies": {
     "tslint": "5.4.3",
     "typescript": "2.2.2"
+  },
+  "publishConfig": {
+    "registry": "https://nexus.causecode.com/repository/npm-private/"
   }
 }
