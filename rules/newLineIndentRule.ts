@@ -82,9 +82,9 @@ function walk(ctx: Lint.WalkContext<IOptions>): void {
              */
             if (node.kind === ts.SyntaxKind.JsxElement || node.kind === ts.SyntaxKind.JsxSelfClosingElement) {
                 if (node.getChildCount() === 3) {
-                    childNodes = node.getChildAt(0).getChildAt(2);
+                    childNodes = node.getChildAt(0).getChildAt(2).getChildAt(0);
                 } else if (node.getChildCount() === 5) {
-                    childNodes = node.getChildAt(2);
+                    childNodes = node.getChildAt(2).getChildAt(0);
                 }
             }
 

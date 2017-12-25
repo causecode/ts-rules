@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.0.2] - [Unreleased]
+
+### Fixed
+ - `ModelResourceName` and `NewLineIndentRule` due to typescript version upgrade.
+ 
 ## [0.0.1] - 05-09-2017
 
 ### Added
