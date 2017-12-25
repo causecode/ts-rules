@@ -41,7 +41,7 @@ function walk(ctx: Lint.WalkContext<void>): void {
     ts.forEachChild(ctx.sourceFile, function cb(node: ts.Node): void {
         const nodeText: string = node.getFullText();
 
-        if (node.kind === ts.SyntaxKind.PropertyDeclaration && nodeText.indexOf('resourceName') !== -1) {
+        if (node.kind === ts.SyntaxKind.PropertyDeclaration && nodeText.indexOf('resourceName:') !== -1) {
             const regex: RegExp = new RegExp(/('|")\w+('|")/);
             
             // matchedString contains value contained in resourceName
