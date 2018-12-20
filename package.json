@@ -13,9 +13,9 @@
   "license": "ISC",
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@bitbucket.org/causecode/ts-rules.git"
+    "url": "git+ssh://git@github.com/causecode/ts-rules.git"
   },
-  "homepage": "https://bitbucket.org/causecode/ts-rules#readme",
+  "homepage": "https://github.com/causecode/ts-rules#readme",
   "dependencies": {
     "@types/node": "8.0.2"
   },
