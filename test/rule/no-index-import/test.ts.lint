@@ -1,4 +1,0 @@
-import { fun} from '../Foo/index'
-                           ~~~~~  [Import from index not allowed.]
-import { React} from 'react'
-import {Route } from 'react-router'
