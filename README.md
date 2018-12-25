@@ -1,4 +1,4 @@
-# TSLINT RULES (0.0.1) #
+# TSLINT RULES (0.0.2) #
 
 ## Usage
 
